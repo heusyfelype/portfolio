@@ -26,9 +26,10 @@ body?.addEventListener("scroll", (e) =>{
 
 <style scoped>
 header {
-  position: sticky;
+  position: fixed;
   top: 0;
   left: 0;
+  right: 0;
   background-color: aqua;
 }
 
