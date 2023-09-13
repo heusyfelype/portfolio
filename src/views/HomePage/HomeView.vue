@@ -1,10 +1,17 @@
 <script setup lang="ts">
-import CustomScroll from "../../components/CustomScroll.vue"
+import CustomScroll from "../../components/CustomScroll/CustomScroll.vue"
+import type { Section } from "@/components/CustomScroll/interfaces";
+
+const sections: Section[] = [
+  {name: "Primeira seção", targetId: "first-section"},
+  {name: "Segunda seção", targetId: "second-section"},
+  {name: "Terceira seção", targetId: "third-section"}
+  ]
 </script>
 
 <template>
   <main>
-    <CustomScroll />
+    <CustomScroll :sections="sections"/>
     <section id="first-section" class="first-section">Primeira seção</section>
     <section id="second-section" class="second-section">Segunda seção</section>
     <section id="third-section" class="third-section">Segunda seção</section>

@@ -1,39 +1,29 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
+import { type Sections } from '@/components/CustomScroll/interfaces'
 
-interface Section {
-  name: string;
-  targetId: string;
-}
+const sections = defineProps<Sections>()
 
-const sections: Section[] = [
-  { name: 'Seção 1', targetId: 'first-section' },
-  { name: 'Seção 2', targetId: 'second-section' },
-  { name: 'Seção 3', targetId: 'third-section' },
-  // Adicione mais seções conforme necessário
-];
-
-const activeIndex = ref<number | null>(null);
+const activeIndex = ref<number | null>(null)
 
 const showTooltip = (index: number) => {
-  activeIndex.value = index;
-};
+  activeIndex.value = index
+}
 
 const scrollToSection = (index: number) => {
-  const targetId = sections[index].targetId;
-  const targetElement = document.getElementById(targetId);
+  const targetId = sections.sections[index].targetId
+  const targetElement = document.getElementById(targetId)
 
   if (targetElement) {
-    targetElement.scrollIntoView({ behavior: 'smooth' });
+    targetElement.scrollIntoView({ behavior: 'smooth' })
   }
-};
+}
 </script>
-
 
 <template>
   <div class="sidebar">
     <div
-      v-for="(section, index) in sections"
+      v-for="(section, index) in sections.sections"
       :key="index"
       class="circle"
       @mouseover="showTooltip(index)"
@@ -82,4 +72,5 @@ const scrollToSection = (index: number) => {
 
 .circle:hover .tooltip {
   display: block;
-}</style>
+}
+</style>
