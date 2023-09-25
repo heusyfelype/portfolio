@@ -1,13 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 
-const body = document.querySelector("body") 
-
-body?.addEventListener("scroll", (e) =>{
-  console.log("Evento: ", e);
-  console.log("Window: ", window)
-})
-
 </script>
 
 <template>

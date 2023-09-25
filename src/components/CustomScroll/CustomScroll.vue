@@ -1,8 +1,15 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { type Sections } from '@/components/CustomScroll/interfaces'
+import { ref, watch, type PropType } from 'vue'
+import type { Sections } from './interfaces'
 
-const sections = defineProps<Sections>()
+const props = defineProps({
+  sections: {
+    type: Array as PropType<Sections>
+  },
+  activeSection: {
+    type: String
+  }
+})
 
 const activeIndex = ref<number | null>(null)
 
@@ -10,24 +17,33 @@ const showTooltip = (index: number) => {
   activeIndex.value = index
 }
 
-const scrollToSection = (index: number) => {
-  const targetId = sections.sections[index].targetId
-  const targetElement = document.getElementById(targetId)
+const scrollToSection = (tagetId: string) => {
+  const targetElement = document.getElementById(tagetId)
 
   if (targetElement) {
     targetElement.scrollIntoView({ behavior: 'smooth' })
   }
 }
+
+watch(() => props.activeSection, (newValue) => {
+  const allCircles = document.querySelectorAll('.circle')
+  allCircles.forEach(element => element.classList.remove('current-in-view'))
+  const findedSection = props.sections?.find((value) => value.targetId == newValue)
+  const element = document.querySelector(`#scroll-${findedSection?.targetId}`)
+  element?.classList.add('current-in-view')
+})
+
 </script>
 
 <template>
   <div class="sidebar">
     <div
-      v-for="(section, index) in sections.sections"
+      v-for="(section, index) in props.sections"
       :key="index"
+      :id="`scroll-${section.targetId}`"
       class="circle"
       @mouseover="showTooltip(index)"
-      @click="scrollToSection(index)"
+      @click="scrollToSection(section.targetId)"
     >
       <div class="tooltip" v-if="activeIndex === index">{{ section.name }}</div>
     </div>
@@ -72,5 +88,9 @@ const scrollToSection = (index: number) => {
 
 .circle:hover .tooltip {
   display: block;
+}
+
+.current-in-view {
+  transform: scaleY(2);
 }
 </style>

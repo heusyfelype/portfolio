@@ -3,8 +3,6 @@ interface Section {
     targetId: string;
 }
 
-interface Sections {
-    sections : Section[]
-}
+type Sections = Section[]
 
 export type {Section, Sections}
